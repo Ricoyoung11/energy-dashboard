@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Test Page</title>
+    <style>
+        body { font-family: sans-serif; padding: 50px; text-align: center; background: #eef; }
+        .box { background: white; padding: 20px; border-radius: 10px; border: 2px solid #007bff; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Dashboard is Online</h1>
+        <p>If you see this, your GitHub Pages is working perfectly.</p>
+        <p id="status">Checking for data.json...</p>
+    </div>
+
+    <script>
+        // This script checks if your data file is reachable
+        fetch('data.json')
+            .then(response => {
+                if(response.ok) {
+                    document.getElementById('status').innerText = "✅ Success! data.json was found.";
+                } else {
+                    document.getElementById('status').innerText = "❌ Error: data.json file not found in this folder.";
+                }
+            })
+            .catch(err => {
+                document.getElementById('status').innerText = "❌ Error: Could not read the data file.";
+            });
+    </script>
+</body>
+</html>
