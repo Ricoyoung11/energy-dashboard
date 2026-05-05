@@ -1,0 +1,24 @@
+[
+  {
+    "date": "2024-08-01",
+    "month": "August",
+    "year": 2024,
+    "propaneGallons": 0,
+    "solarMade": 1620,
+    "electricPurchased": 869,
+    "solarSold": 896,
+    "electricBill": 29.73,
+    "avgTemp": 70
+  },
+  {
+    "date": "2024-09-01",
+    "month": "September",
+    "year": 2024,
+    "propaneGallons": 226.6,
+    "solarMade": 1200,
+    "electricPurchased": 900,
+    "solarSold": 400,
+    "electricBill": -22.84,
+    "avgTemp": 63.1
+  }
+]
