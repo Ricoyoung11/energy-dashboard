@@ -70,6 +70,28 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+    <h2>Propane Predictor</h2>
+    <div class="form-group">
+        <label>Current Tank Level (%)</label>
+        <input type="number" id="propanePct" placeholder="e.g. 65" oninput="calculatePropane()">
+    </div>
+    <div class="form-group">
+        <label>Average Daily Burn (Gallons)</label>
+        <input type="number" step="0.1" id="dailyBurn" value="3.5" oninput="calculatePropane()">
+    </div>
+    <hr style="border: 1px solid #f1f5f9; margin: 15px 0;">
+    <div style="display: flex; justify-content: space-between; text-align: center;">
+        <div>
+            <label style="font-size: 0.9rem; color: #64748b;">Est. Gallons Left</label>
+            <div id="gallonsLeft" class="metric" style="font-size: 1.8rem; color: #0f172a;">0</div>
+        </div>
+        <div>
+            <label style="font-size: 0.9rem; color: #64748b;">Days Remaining</label>
+            <div id="daysLeft" class="metric" style="font-size: 1.8rem; color: #ea580c;">0</div>
+        </div>
+    </div>
+</div>
         <script src="script.js"></script>
     </body>
     </html>
