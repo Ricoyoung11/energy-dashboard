@@ -18,7 +18,8 @@ const initYearlyData = () => {
     };
     
     let currentMetric = 'offset';
-    let currentChartYear = '2026';
+    let currentChartYear1 = '2026';
+    let currentChartYear2 = 'historical';
     
     const ctx = document.getElementById('energyChart').getContext('2d');
     const chart = new Chart(ctx, {
@@ -27,7 +28,7 @@ const initYearlyData = () => {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
                 label: '2026 Data',
-                data: metricsData[currentMetric].yearly[currentChartYear],
+                data: metricsData[currentMetric].yearly['2026'],
                 backgroundColor: '#2563eb'
             }, {
                 label: 'Historical Avg',
@@ -43,11 +44,25 @@ const initYearlyData = () => {
     
     function changeChartMetric() {
         currentMetric = document.getElementById('metricDropdown').value;
-        currentChartYear = document.getElementById('chartYearDropdown').value;
+        currentChartYear1 = document.getElementById('chartYear1Dropdown').value;
+        currentChartYear2 = document.getElementById('chartYear2Dropdown').value;
         
-        chart.data.datasets[0].data = metricsData[currentMetric].yearly[currentChartYear];
-        chart.data.datasets[0].label = `${currentChartYear} Data`;
-        chart.data.datasets[1].data = metricsData[currentMetric].historical;
+        chart.data.datasets[0].data = metricsData[currentMetric].yearly[currentChartYear1];
+        chart.data.datasets[0].label = `${currentChartYear1} Data`;
+        
+        if (currentChartYear2 === 'historical') {
+            chart.data.datasets[1].data = metricsData[currentMetric].historical;
+            chart.data.datasets[1].label = 'Historical Avg';
+            chart.data.datasets[1].borderColor = '#94a3b8';
+            chart.data.datasets[1].borderDash = [5, 5];
+            chart.data.datasets[1].type = 'line';
+        } else {
+            chart.data.datasets[1].data = metricsData[currentMetric].yearly[currentChartYear2];
+            chart.data.datasets[1].label = `${currentChartYear2} Data`;
+            chart.data.datasets[1].borderColor = '#f59e0b';
+            chart.data.datasets[1].borderDash = [];
+            chart.data.datasets[1].type = 'line';
+        }
         
         if(currentMetric.includes('Cost') || currentMetric.includes('Bill')) {
             chart.data.datasets[0].backgroundColor = '#ef4444';
@@ -90,7 +105,7 @@ const initYearlyData = () => {
         display.innerText = calculatedOffset + '%';
         display.style.color = calculatedOffset >= 100 ? '#16a34a' : '#2563eb';
     
-        if (y === document.getElementById('chartYearDropdown').value) {
+        if (y === document.getElementById('chartYear1Dropdown').value || y === document.getElementById('chartYear2Dropdown').value) {
             chart.update();
         }
         
@@ -100,19 +115,14 @@ const initYearlyData = () => {
     function calculatePropane() {
         const tankCapacity = 500; 
         const fillThreshold = 20; 
-        
         const currentPct = parseFloat(document.getElementById('propanePct').value) || 0;
         const dailyBurn = parseFloat(document.getElementById('dailyBurn').value) || 0;
-    
         const totalGallonsRemaining = (currentPct / 100) * tankCapacity;
         const unusableGallons = (fillThreshold / 100) * tankCapacity;
         const usableGallons = Math.max(0, totalGallonsRemaining - unusableGallons);
-    
         const daysRemaining = dailyBurn > 0 ? Math.floor(usableGallons / dailyBurn) : 0;
-    
         document.getElementById('gallonsLeft').innerText = Math.round(totalGallonsRemaining);
         const daysDisplay = document.getElementById('daysLeft');
         daysDisplay.innerText = daysRemaining;
         daysDisplay.style.color = daysRemaining <= 14 ? '#dc2626' : '#ea580c';
     }
-    
