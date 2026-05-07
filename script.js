@@ -29,14 +29,18 @@ const initYearlyData = () => {
             datasets: [{
                 label: '2026 Data',
                 data: metricsData[currentMetric].yearly['2026'],
-                backgroundColor: '#2563eb'
+                backgroundColor: '#2563eb',
+                order: 2
             }, {
                 label: 'Historical Avg',
                 data: metricsData[currentMetric].historical,
                 type: 'line',
                 borderColor: '#94a3b8',
                 borderDash: [5, 5],
-                borderWidth: 2
+                borderWidth: 2,
+                pointBackgroundColor: '#94a3b8',
+                pointRadius: 4,
+                order: 1
             }]
         },
         options: { responsive: true, scales: { y: { beginAtZero: true } } }
@@ -49,19 +53,24 @@ const initYearlyData = () => {
         
         chart.data.datasets[0].data = metricsData[currentMetric].yearly[currentChartYear1];
         chart.data.datasets[0].label = `${currentChartYear1} Data`;
+        chart.data.datasets[0].order = 2;
         
         if (currentChartYear2 === 'historical') {
             chart.data.datasets[1].data = metricsData[currentMetric].historical;
             chart.data.datasets[1].label = 'Historical Avg';
             chart.data.datasets[1].borderColor = '#94a3b8';
+            chart.data.datasets[1].pointBackgroundColor = '#94a3b8';
             chart.data.datasets[1].borderDash = [5, 5];
             chart.data.datasets[1].type = 'line';
+            chart.data.datasets[1].order = 1;
         } else {
             chart.data.datasets[1].data = metricsData[currentMetric].yearly[currentChartYear2];
             chart.data.datasets[1].label = `${currentChartYear2} Data`;
             chart.data.datasets[1].borderColor = '#f59e0b';
+            chart.data.datasets[1].pointBackgroundColor = '#f59e0b';
             chart.data.datasets[1].borderDash = [];
             chart.data.datasets[1].type = 'line';
+            chart.data.datasets[1].order = 1;
         }
         
         if(currentMetric.includes('Cost') || currentMetric.includes('Bill')) {
@@ -126,3 +135,4 @@ const initYearlyData = () => {
         daysDisplay.innerText = daysRemaining;
         daysDisplay.style.color = daysRemaining <= 14 ? '#dc2626' : '#ea580c';
     }
+    
