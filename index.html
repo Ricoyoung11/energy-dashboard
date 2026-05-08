@@ -7,236 +7,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .metric-card { padding: 20px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s; }
-        .metric-card:hover { border-color: #2563eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .metric-card.active { background-color: #f0f7ff; border-color: #2563eb; }
-        .chart-container { position: relative; height: 400px; width: 100%; margin-bottom: 30px; }
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
-        form { display: grid; gap: 10px; max-width: 400px; margin-top: 40px; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <h1>Energy Consumption Dashboard</h1>
-
-    <div class="dashboard-grid">
-        <div class="metric-card active" onclick="showMetric('solarMade')">Solar Made</div>
-        <div class="metric-card" onclick="showMetric('elecPurchased')">Grid Purchased</div>
-        <div class="metric-card" onclick="showMetric('solarUsed')">Solar Used</div>
-        <div class="metric-card" onclick="showMetric('solarSold')">Solar Sold</div><!DOCTYPE html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8fafc;
-            color: #334155;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #0f172a;
-        }
-        .dashboard-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .metric-card {
-            flex: 1 1 150px;
-            max-width: 180px;
-            padding: 15px;
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            transition: all 0.2s;
-        }
-        .metric-card:hover {
-            border-color: #3b82f6;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        }
-        .metric-card.active {
-            background-color: #eff6ff;
-            border-color: #3b82f6;
-            color: #1d4ed8;
-        }
-        .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        select {
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
-            font-size: 14px;
-            outline: none;
-            cursor: pointer;
-        }
-        .chart-wrapper {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-        }
-        .chart-container {
-            position: relative;
-            height: 500px;
-            width: 100%;
-        }
-        .log-section {
-            background: white;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-        .log-section h3 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #0f172a;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .form-grid input {
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 14px;
-            background-color: #3b82f6;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: #2563eb;<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Consumption Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --border-color: #334155;
-        }
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        h1 { text-align: center; color: var(--text-color); margin-bottom: 2rem; font-weight: 700; }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .metric-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 0.75rem; text-align: center; cursor: pointer; transition: all 0.2s; }
-        .metric-card:hover { border-color: var(--primary); transform: translateY(-2px); }
-        .metric-card.active { background: var(--primary); border-color: var(--primary); }
-        .controls { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem; align-items: center; background: var(--card-bg); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color); }
-        select { background: #334155; color: white; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 0.5rem; outline: none; }
-        .chart-wrapper { background: var(--card-bg); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color); margin-bottom: 2rem; }
-        .chart-container { position: relative; height: 400px; }
-        .log-section { background: var(--card-bg); padding: 2rem; border-radius: 0.75rem; border: 1px solid var(--border-color); }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-        .form-grid input { background: #0f172a; border: 1px solid var(--border-color); color: white; padding: 0.75rem; border-radius: 0.5rem; width: 100%; box-sizing: border-box; }
-        button { background-color: var(--primary); color: white; border: none; padding: 1rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
-        button:hover { background-color: var(--primary-hover); }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Energy Consumption Dashboard</h1>
-        <div class="dashboard-grid">
-            <div class="metric-card active" onclick="showMetric('solar_made')">Solar Made</div>
-            <div class="metric-card" onclick="showMetric('elec_purchased')">Grid Purchased</div>
-            <div class="metric-card" onclick="showMetric('solar_used')">Solar Used</div>
-            <div class="metric-card" onclick="showMetric('solar_sold')">Solar Sold</div>
-            <div class="metric-card" onclick="showMetric('kwh_paid')">kWh Paid</div>
-            <div class="metric-card" onclick="showMetric('total_power')">Total Power</div>
-        </div>
-        <div class="controls">
-            <label style="font-weight: 600; color: #94a3b8;">Compare:</label>
-            <select id="yearSelect1" onchange="changeYear1(this.value)">
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-            </select>
-            <span style="font-weight: 600; color: #94a3b8;">vs</span>
-            <select id="yearSelect2" onchange="changeYear2(this.value)">
-                <option value="historical">Historical Avg</option>
-                <option value="2024">2024</option>
-            </select>
-        </div>
-        <div class="chart-wrapper">
-            <div class="chart-container">
-                <canvas id="energyChart"></canvas>
-            </div>
-        </div>
-        <div class="log-section">
-            <h3>Log Monthly Data</h3>
-            <div class="form-grid">
-                <input type="number" id="inputYear" placeholder="Year (e.g. 2026)">
-                <input type="number" id="inputMonth" placeholder="Month (1-12)">
-                <input type="number" id="inputSolarMade" placeholder="Solar Made (kWh)">
-                <input type="number" id="inputGridPurchased" placeholder="Grid Purchased (kWh)">
-                <input type="number" id="inputSolarUsed" placeholder="Solar Used (kWh)">
-                <input type="number" id="inputSolarSold" placeholder="Solar Sold (kWh)">
-                <input type="number" id="inputElecBill" placeholder="Elec Bill ($)" step="0.01">
-                <input type="number" id="inputPropaneUsage" placeholder="Propane Usage (Gals)" step="0.01">
-                <input type="number" id="inputPropaneCost" placeholder="Propane Cost ($)" step="0.01">
-                <input type="number" id="inputTotalPower" placeholder="Total Power (kWh)">
-            </div>
-            <button type="button" onclick="logMonthlyData()">Submit Data</button>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f8fafc; color: #334155; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { text-align: center; color: #0f172a; margin-bottom: 20px; }
+        .dashboard-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .metric-card { padding: 10px 15px; background: white; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; text-align: center; font-weight: 600; font-size: 14px; transition: 0.2s; }
+        .metric-card:hover { border-color: #3b82f6; background-color: #f1f5f9; }
+        .metric-card.active { background-color: #eff6ff; border-color: #3b82f6; color: #1d4ed8; }
+        .controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; padding: 15px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
+        select { padding: 8px; border-radius: 4px; border: 1px solid #cbd5e1; }
+        .chart-wrapper { background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 30px; height: 400px; }
+        .log-section { background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .log-section h3 { margin-top: 0; text-align: center; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px; }
+        .form-grid input { padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; width: 100%; box-sizing: border-box; }
+        .submit-btn { width: 100%; padding: 12px; background-color: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .submit-btn:hover { background-color: #1d4ed8; }
     </style>
 </head>
 <body>
@@ -253,22 +39,14 @@
         </div>
 
         <div class="controls">
-            <label style="font-weight: bold; color: #475569;">Compare:</label>
-            <select id="yearSelect1" onchange="changeYear1(this.value)">
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-            </select>
-            <span style="font-weight: bold; color: #475569;">vs</span>
-            <select id="yearSelect2" onchange="changeYear2(this.value)">
-                <option value="historical">Historical Avg</option>
-                <option value="2024">2024</option>
-            </select>
+            <label><strong>Compare:</strong></label>
+            <select id="yearSelect1" onchange="changeYear1(this.value)"></select>
+            <span><strong>vs</strong></span>
+            <select id="yearSelect2" onchange="changeYear2(this.value)"></select>
         </div>
 
         <div class="chart-wrapper">
-            <div class="chart-container">
-                <canvas id="energyChart"></canvas>
-            </div>
+            <canvas id="energyChart"></canvas>
         </div>
 
         <div class="log-section">
@@ -286,113 +64,9 @@
                 <input type="number" id="inputPropaneCost" placeholder="Propane Cost ($)" step="0.01">
                 <input type="number" id="inputTotalPower" placeholder="Total Power (kWh)">
             </div>
-            <button type="button" onclick="logMonthlyData()">Submit Data</button>
+            <button class="submit-btn" onclick="logMonthlyData()">Submit Data</button>
         </div>
     </div>
-    <script src="script.js"></script>
-</body>
-</html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .metric-card { padding: 20px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s; }
-        .metric-card:hover { border-color: #2563eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .metric-card.active { background-color: #f0f7ff; border-color: #2563eb; }
-        .chart-container { position: relative; height: 400px; width: 100%; margin-bottom: 30px; }
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
-        form { display: grid; gap: 10px; max-width: 400px; margin-top: 40px; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <h1>Energy Consumption Dashboard</h1>
-    
-    <div class="dashboard-grid">
-        <div class="metric-card active" onclick="showMetric('solarMade')">Solar Made</div>
-        <div class="metric-card" onclick="showMetric('elecPurchased')">Grid Purchased</div>
-        <div class="metric-card" onclick="showMetric('solarUsed')">Solar Used</div>
-        <div class="metric-card" onclick="showMetric('solarSold')">Solar Sold</div>
-        <div class="metric-card" onclick="showMetric('kWhPaid')">kWh Paid</div>
-    </div>
-
-    <div class="controls">
-        <select id="yearSelect1" onchange="changeYear1(this.value)">
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
-        </select>
-        <select id="yearSelect2" onchange="changeYear2(this.value)">
-            <option value="historical">Historical Avg</option>
-            <option value="2024">2024</option>
-        </select>
-    </div>
-
-    <div class="chart-container">
-        <canvas id="energyChart"></canvas>
-    </div>
-
-    <form id="logForm" onsubmit="event.preventDefault(); logMonthlyData(new FormData(this))">
-        <h3>Log Monthly Data</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-            <input type="number" id="inputYear" placeholder="Year (e.g. 2026)">
-            <input type="number" id="inputMonth" placeholder="Month (1-12)">
-            <input type="number" id="inputSolarMade" placeholder="Solar Made (kWh)">
-            <input type="number" id="inputGridPurchased" placeholder="Grid Purchased (kWh)">
-            <input type="number" id="inputSolarUsed" placeholder="Solar Used (kWh)">
-            <input type="number" id="inputSolarSold" placeholder="Solar Sold (kWh)">
-            <input type="number" id="inputkWhPaid" placeholder="kWh Paid (kWh)">
-            <input type="number" id="inputElecBill" placeholder="Elec Bill ($)" step="0.01">
-            <input type="number" id="inputPropaneUsage" placeholder="Propane Usage (Gals)" step="0.01">
-            <input type="number" id="inputPropaneCost" placeholder="Propane Cost ($)" step="0.01">
-            <input type="number" id="inputTotalPower" placeholder="Total Power (kWh)">
-        </div>
-        <button onclick="logMonthlyData()" style="width: 100%; padding: 10px; background-color: #2563eb; color: white; border: none; cursor: pointer;">Submit Data</button>
-    </form>
-
-    <script src="script.js"></script>
-</body>
-</html>
-        <div class="metric-card" onclick="showMetric('kwhPaid')">kWh Paid</div>
-    </div>
-
-    <div class="controls">
-        <select id="yearSelect1" onchange="changeYear1(this.value)">
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
-        </select>
-        <select id="yearSelect2" onchange="changeYear2(this.value)">
-            <option value="historical">Historical Avg</option>
-            <option value="2024">2024</option>
-        </select>
-    </div>
-
-    <div class="chart-container">
-        <canvas id="energyChart"></canvas>
-    </div>
-
-    <form id="logForm" onsubmit="event.preventDefault(); logMonthlyData(new FormData(this))">
-        <h3>Log Monthly Data</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-            <input type="number" id="inputYear" placeholder="Year (e.g. 2026)">
-            <input type="number" id="inputMonth" placeholder="Month (1-12)">
-            <input type="number" id="inputSolarMade" placeholder="Solar Made (kWh)">
-            <input type="number" id="inputGridPurchased" placeholder="Grid Purchased (kWh)">
-            <input type="number" id="inputSolarUsed" placeholder="Solar Used (kWh)">
-            <input type="number" id="inputSolarSold" placeholder="Solar Sold (kWh)">
-            <input type="number" id="inputKwhPaid" placeholder="kWh Paid (kWh)">
-            <input type="number" id="inputElecBill" placeholder="Elec Bill ($)">
-            <input type="number" id="inputPropaneUsage" placeholder="Propane Usage (Gals)">
-            <input type="number" id="inputPropaneCost" placeholder="Propane Cost ($)">
-            <input type="number" id="inputTotalPower" placeholder="Total Power (kWh)">
-        </div>
-        <button onclick="logMonthlyData()" style="width: 100%; padding: 10px; background-color: #2563eb; color: white; border: none; cursor: pointer;">Submit Data</button>
-    </form>
-
     <script src="script.js"></script>
 </body>
 </html>
