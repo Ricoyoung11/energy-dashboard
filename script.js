@@ -26,7 +26,7 @@ const initYearlyData = () => {
 ], yearly: initYearlyData() }
     };const supabaseUrl = 'https://graihkrrpfgiszjgzghf.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyYWloa3JycGZnaXN6amd6Z2hmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNTA4MzIsImV4cCI6MjA5MzgyNjgzMn0.ekurA5jTtAm3AfH9a9EfrUnapslcuISLsM8z2r4Zh7w';
-const supabase = supabasejs.createClient(supabaseUrl, supabaseKey);
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 const metricsData = {
     solarMade: { label: 'Solar Made (kWh)', historical: new Array(12).fill(0), yearly: {} },
