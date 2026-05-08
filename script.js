@@ -115,6 +115,7 @@ async function fetchDataFromSupabase() {
     });
 
     calculateHistoricalAverages();
+    updateYearDropdowns();
     updateCharts();
 }
 
@@ -179,3 +180,24 @@ async function logMonthlyData() {
     }
 }
 fetchDataFromSupabase();
+function updateYearDropdowns() {
+    const years = new Set();
+    for (const metric in metricsData) {
+        Object.keys(metricsData[metric].yearly).forEach(y => years.add(y));
+    }
+    const sortedYears = Array.from(years).sort((a, b) => b - a);
+    const select1 = document.getElementById('yearSelect1');
+    const select2 = document.getElementById('yearSelect2');
+    
+    const val1 = select1.value;
+    const val2 = select2.value;
+    
+    select1.innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
+    select2.innerHTML = `<option value="historical">Historical Avg</option>` + sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
+    
+    if (sortedYears.includes(val1)) select1.value = val1;
+    else if (sortedYears.length > 0) { select1.value = sortedYears[0]; currentChartYear1 = sortedYears[0]; }
+    
+    if (val2 === 'historical' || sortedYears.includes(val2)) select2.value = val2;
+    else if (sortedYears.length > 0) { select2.value = 'historical'; currentChartYear2 = 'historical'; }
+}
