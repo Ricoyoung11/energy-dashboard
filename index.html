@@ -2,10 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Energy Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .metric-card { padding: 20px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s; }
+        .metric-card:hover { border-color: #2563eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .metric-card.active { background-color: #f0f7ff; border-color: #2563eb; }
+        .chart-container { position: relative; height: 400px; width: 100%; margin-bottom: 30px; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        form { display: grid; gap: 10px; max-width: 400px; margin-top: 40px; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
+    </style>
 </head>
 <body>
+    <h1>Energy Consumption Dashboard</h1>
+    
+    <div class="dashboard-grid">
+        <div class="metric-card active" onclick="showMetric('solarMade')">Solar Made</div>
+        <div class="metric-card" onclick="showMetric('elecPurchased')">Grid Purchased</div>
+        <div class="metric-card" onclick="showMetric('solarUsed')">Solar Used</div>
+        <div class="metric-card" onclick="showMetric('solarSold')">Solar Sold</div>
+        <div class="metric-card" onclick="showMetric('kWhPaid')">kWh Paid</div>
+    </div>
+
+    <div class="controls">
+        <select id="yearSelect1" onchange="changeYear1(this.value)">
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+        </select>
+        <select id="yearSelect2" onchange="changeYear2(this.value)">
+            <option value="historical">Historical Avg</option>
+            <option value="2024">2024</option>
+        </select>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="energyChart"></canvas>
+    </div>
+
+    <form id="logForm" onsubmit="event.preventDefault(); logMonthlyData(new FormData(this))">
+        <h3>Log Monthly Data</h3>
+        <input type="number" name="year" placeholder="Year (e.g., 2025)" required>
+        <input type="number" name="month" placeholder="Month (0-11)" required>
+        <input type="number" step="0.01" name="solarMade" placeholder="Solar Made">
+        <input type="number" step="0.01" name="elecPurchased" placeholder="Electricity Purchased">
+        <button type="submit">Submit Data</button>
+    </form>
+
     <script src="script.js"></script>
 </body>
 </html>
