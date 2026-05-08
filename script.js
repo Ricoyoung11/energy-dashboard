@@ -143,4 +143,39 @@ function showMetric(metric) {
 function changeYear1(year) { currentChartYear1 = year; updateCharts(); }
 function changeYear2(year) { currentChartYear2 = year; updateCharts(); }
 
+
+async function logMonthlyData() {
+    const year = parseInt(document.getElementById('inputYear').value);
+    const month = parseInt(document.getElementById('inputMonth').value) - 1; 
+    if (isNaN(year) || isNaN(month) || month < 0 || month > 11) {
+        alert('Please enter a valid Year and Month (1-12).');
+        return;
+    }
+
+    const dataToLog = {
+        year: year,
+        month: month,
+        solar_made: parseFloat(document.getElementById('inputSolarMade').value) || 0,
+        elec_purchased: parseFloat(document.getElementById('inputGridPurchased').value) || 0,
+        solar_used: parseFloat(document.getElementById('inputSolarUsed').value) || 0,
+        solar_sold: parseFloat(document.getElementById('inputSolarSold').value) || 0,
+        kwh_paid: parseFloat(document.getElementById('inputKwhPaid').value) || 0,
+        elec_bill: parseFloat(document.getElementById('inputElecBill').value) || 0,
+        propane_usage: parseFloat(document.getElementById('inputPropaneUsage').value) || 0,
+        propane_cost: parseFloat(document.getElementById('inputPropaneCost').value) || 0,
+        total_power: parseFloat(document.getElementById('inputTotalPower').value) || 0
+    };
+
+    const { error } = await supabaseClient.from('energy_metrics').upsert(dataToLog, { onConflict: 'year, month' });
+    if (error) {
+        console.error('Error saving data:', error);
+        alert('Error saving data.');
+    } else {
+        alert('Data logged successfully!');
+        fetchDataFromSupabase(); // refresh the data and charts
+        
+        // Clear inputs
+        document.querySelectorAll('input[type="number"]').forEach(input => input.value = '');
+    }
+}
 fetchDataFromSupabase();
