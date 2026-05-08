@@ -19,13 +19,13 @@
 </head>
 <body>
     <h1>Energy Consumption Dashboard</h1>
-    
+
     <div class="dashboard-grid">
         <div class="metric-card active" onclick="showMetric('solarMade')">Solar Made</div>
         <div class="metric-card" onclick="showMetric('elecPurchased')">Grid Purchased</div>
         <div class="metric-card" onclick="showMetric('solarUsed')">Solar Used</div>
         <div class="metric-card" onclick="showMetric('solarSold')">Solar Sold</div>
-        <div class="metric-card" onclick="showMetric('kWhPaid')">kWh Paid</div>
+        <div class="metric-card" onclick="showMetric('kwhPaid')">kWh Paid</div>
     </div>
 
     <div class="controls">
@@ -45,11 +45,20 @@
 
     <form id="logForm" onsubmit="event.preventDefault(); logMonthlyData(new FormData(this))">
         <h3>Log Monthly Data</h3>
-        <input type="number" name="year" placeholder="Year (e.g., 2025)" required>
-        <input type="number" name="month" placeholder="Month (0-11)" required>
-        <input type="number" step="0.01" name="solarMade" placeholder="Solar Made">
-        <input type="number" step="0.01" name="elecPurchased" placeholder="Electricity Purchased">
-        <button type="submit">Submit Data</button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+            <input type="number" id="inputYear" placeholder="Year (e.g. 2026)">
+            <input type="number" id="inputMonth" placeholder="Month (1-12)">
+            <input type="number" id="inputSolarMade" placeholder="Solar Made (kWh)">
+            <input type="number" id="inputGridPurchased" placeholder="Grid Purchased (kWh)">
+            <input type="number" id="inputSolarUsed" placeholder="Solar Used (kWh)">
+            <input type="number" id="inputSolarSold" placeholder="Solar Sold (kWh)">
+            <input type="number" id="inputKwhPaid" placeholder="kWh Paid (kWh)">
+            <input type="number" id="inputElecBill" placeholder="Elec Bill ($)">
+            <input type="number" id="inputPropaneUsage" placeholder="Propane Usage (Gals)">
+            <input type="number" id="inputPropaneCost" placeholder="Propane Cost ($)">
+            <input type="number" id="inputTotalPower" placeholder="Total Power (kWh)">
+        </div>
+        <button onclick="logMonthlyData()" style="width: 100%; padding: 10px; background-color: #2563eb; color: white; border: none; cursor: pointer;">Submit Data</button>
     </form>
 
     <script src="script.js"></script>
