@@ -5,16 +5,25 @@ const initYearlyData = () => {
     };
     
     const metricsData = {
-        propaneUsage: { label: 'Propane Usage (gallons)', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() },
-        propaneCost: { label: 'Total Propane Cost ($)', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() },
-        solarMade: { label: 'Solar Made (kWh)', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() },
-        elecPurchased: { label: 'Electric Purchased (kWh)', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() },
-        solarUsed: { label: 'Solar Used While Making (kWh)', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() },
-        solarSold: { label: 'Solar Sold (kWh)', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() },
-        elecBill: { label: 'Electric Bill ($)', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() },
+        propaneUsage: { label: 'Propane Usage (gallons)', historical: [277.035735735736, 234.92752688172, 199.192481203008, 192.766917293233, 42.4861271676301, 41.1156069364162, 21.243063583815, 21.243063583815, 47.5339939443986, 79.1428210678211, 76.5898268398268, 277.035735735736
+], yearly: initYearlyData() },
+        propaneCost: { label: 'Total Propane Cost ($)', historical: [589.748468468468, 526.855075268817, 461.044197994987, 446.171804511278, 83.5315606936416, 80.8369942196532, 41.7657803468208, 41.7657803468208, 100.273259014588, 167.153632756133, 161.76158008658, 589.748468468468
+], yearly: initYearlyData() },
+        solarMade: { label: 'Solar Made (kWh)', historical: [524.5, 497.5, 1190, 1650, 1540, 1750, 2070, 1760, 1810, 1560, 836, 446
+], yearly: initYearlyData() },
+        elecPurchased: { label: 'Electric Purchased (kWh)', historical: [1166, 1074.5, 791, 729.5, 677, 789, 1020, 848.5, 778, 762, 884, 1473.5
+], yearly: initYearlyData() },
+        solarUsed: { label: 'Solar Used While Making (kWh)', historical: [275.5, 306, 491, 554, 567, 733, 922, 723, 701.5, 482.5, 335, 252.5
+], yearly: initYearlyData() },
+        solarSold: { label: 'Solar Sold (kWh)', historical: [249, 191.5, 699, 1096, 973, 1017, 1148, 1037, 1108.5, 1077.5, 501, 193.5
+], yearly: initYearlyData() },
+        elecBill: { label: 'Electric Bill ($)', historical: [232.31, 214.315, 51.955, -33.225, -17.24, -5.88, 11.85, 2.05, -34.235, -20.61, 114.535, 314.21
+], yearly: initYearlyData() },
         offset: { label: 'Solar Offset %', historical: [37, 36, 93, 128, 124, 115, 53, 112, 122, 125, 69, 26], yearly: initYearlyData() },
-        kwhPaid: { label: 'kWh paid for', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() },
-        totalPower: { label: 'Total Power Used (kWh)', historical: [0,0,0,0,0,0,0,0,0,0,0,0], yearly: initYearlyData() }
+        kwhPaid: { label: 'kWh paid for', historical: [917, 883, 92, -366.5, -296, -228, -128, -188.5, -330.5, -315.5, 383, 1280
+], yearly: initYearlyData() },
+        totalPower: { label: 'Total Power Used (kWh)', historical: [1441.5, 1380.5, 1282, 1283.5, 1244, 1522, 1942, 1571.5, 1479.5, 1244.5, 1219, 1726
+], yearly: initYearlyData() }
     };
     
     let currentMetric = 'offset';
