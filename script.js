@@ -93,3 +93,34 @@ async function logMonthlyData() {
         fetchDataFromSupabase();
     }
 }
+function changeYear1(year) {
+    currentChartYear1 = year;
+    updateCharts();
+}
+
+function changeYear2(year) {
+    currentChartYear2 = year;
+    updateCharts();
+}
+
+function updateYearDropdowns() {
+    const years = new Set();
+    // This looks at all metrics (including your new ones) to find available years
+    for (const metric in metricsData) {
+        Object.keys(metricsData[metric].yearly).forEach(y => years.add(y));
+    }
+    
+    const sortedYears = Array.from(years).sort((a, b) => b - a);
+    const select1 = document.getElementById('yearSelect1');
+    const select2 = document.getElementById('yearSelect2');
+    
+    if (!select1 || !select2) return;
+
+    const options = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
+    select1.innerHTML = options;
+    select2.innerHTML = `<option value="">None</option>` + options;
+
+    // Keep current selections if they still exist
+    if (sortedYears.includes(currentChartYear1)) select1.value = currentChartYear1;
+    if (currentChartYear2 && sortedYears.includes(currentChartYear2)) select2.value = currentChartYear2;
+}
