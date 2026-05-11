@@ -92,7 +92,7 @@ async function logMonthlyData() {
         alert('Data logged successfully!');
         fetchDataFromSupabase();
     }
-}} // This closes the logMonthlyData function properly
+} // This closes the logMonthlyData function properly
 
 function changeYear1(year) {
     currentChartYear1 = year;
