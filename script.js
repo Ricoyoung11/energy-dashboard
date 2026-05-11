@@ -10,7 +10,7 @@ const metricsData = {
     propane_cost: { label: 'Propane Cost ($)', historical: new Array(12).fill(0), yearly: {} }
 };
 
-async function fetchDataFromSupabase() {
+
     const { data, error } = await supabaseClient.from('energy_metrics').select('*');
     if (error) { console.error('Error fetching:', error); return; }
 
@@ -94,7 +94,7 @@ async function logMonthlyData() {
     }
 } // This closes the logMonthlyData function properly
 
-function changeYear1(year) {
+function changeYear1(year) 
     currentChartYear1 = year;
     updateCharts();
 }
