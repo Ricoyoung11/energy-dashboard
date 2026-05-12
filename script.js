@@ -16,17 +16,28 @@ let currentChartYear2 = 'historical';
 let chart;
 
 const supabaseUrl = 'https://graihkrrpfgiszjgzghf.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Ensure your full key is here
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; 
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+function initChart() {
+    const ctx = document.getElementById('energyChart').getContext('2d');
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [
+                { label: 'Year 1', data: [], borderColor: '#3b82f6', tension: 0.1, fill: false },
+                { label: 'Comparison', data: [], borderColor: '#94a3b8', borderDash: [5, 5], tension: 0.1, fill: false }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+}
+
+// --- 2. Fetch Data ---
 async function fetchDataFromSupabase() {
     const { data, error } = await supabaseClient.from('energy_metrics').select('*');
     if (error) { console.error('Error fetching:', error); return; }
-
-    if (!data || data.length === 0) {
-        console.log("No data found in Supabase.");
-        return;
-    }
 
     for (const metric in metricsData) metricsData[metric].yearly = {};
 
@@ -42,7 +53,7 @@ async function fetchDataFromSupabase() {
 
     calculateHistoricalAverages();
     updateYearDropdowns();
-    if (chart) updateCharts();
+    updateCharts();
 }
 
 function calculateHistoricalAverages() {
@@ -51,12 +62,8 @@ function calculateHistoricalAverages() {
         if (years.length === 0) continue;
         const historical = new Array(12).fill(0);
         for (let m = 0; m < 12; m++) {
-            let sum = 0;
-            let count = 0;
-            years.forEach(y => {
-                sum += metricsData[metric].yearly[y][m];
-                count++;
-            });
+            let sum = 0, count = 0;
+            years.forEach(y => { sum += metricsData[metric].yearly[y][m]; count++; });
             historical[m] = sum / count;
         }
         metricsData[metric].historical = historical;
@@ -81,69 +88,57 @@ function updateCharts() {
 
 function showMetric(metric) {
     currentMetric = metric;
-    document.querySelectorAll('.metric-card').forEach(card => card.classList.remove('active'));
-    const activeBtn = document.querySelector(`[onclick="showMetric('${metric}')"]`);
-    if (activeBtn) activeBtn.classList.add('active');
+    document.querySelectorAll('.metric-btn').forEach(btn => btn.classList.remove('active'));
     updateCharts();
 }
 
+// --- 3. Log Data (Corrected IDs) ---
 async function logMonthlyData() {
-    const year = parseInt(document.getElementById('inputYear').value);
-    const month = parseInt(document.getElementById('inputMonth').value) - 1;
+    // These IDs now match your HTML exactly
+    const year = parseInt(document.getElementById('year').value);
+    const month = parseInt(document.getElementById('month').value) - 1;
 
     const dataToLog = {
-        year: year,
-        month: month,
-        solar_made: parseFloat(document.getElementById('inputSolarMade').value) || 0,
-        elec_purchased: parseFloat(document.getElementById('inputGridPurchased').value) || 0,
-        solar_used: parseFloat(document.getElementById('inputSolarUsed').value) || 0,
-        solar_sold: parseFloat(document.getElementById('inputSolarSold').value) || 0,
-        kwh_paid: parseFloat(document.getElementById('inputKwhPaid').value) || 0,
-        total_power: parseFloat(document.getElementById('inputTotalPower').value) || 0,
-        elec_bill: parseFloat(document.getElementById('inputElecBill').value) || 0,
-        propane_usage: parseFloat(document.getElementById('inputPropaneUsage').value) || 0,
-        propane_cost: parseFloat(document.getElementById('inputPropaneCost').value) || 0
+        year, month,
+        solar_made: parseFloat(document.getElementById('solar_made_input').value) || 0,
+        elec_purchased: parseFloat(document.getElementById('grid_purchased_input').value) || 0,
+        solar_used: parseFloat(document.getElementById('solar_used_input').value) || 0,
+        solar_sold: parseFloat(document.getElementById('solar_sold_input').value) || 0,
+        kwh_paid: parseFloat(document.getElementById('kwh_paid_input').value) || 0,
+        elec_bill: parseFloat(document.getElementById('elec_bill_input').value) || 0,
+        propane_usage: parseFloat(document.getElementById('propane_usage_input').value) || 0,
+        propane_cost: parseFloat(document.getElementById('propane_cost_input').value) || 0,
+        total_power: parseFloat(document.getElementById('total_power_input').value) || 0
     };
 
     const { error } = await supabaseClient.from('energy_metrics').upsert(dataToLog, { onConflict: 'year, month' });
 
     if (error) {
-        alert('Error logging data: ' + error.message);
+        alert('Error: ' + error.message);
     } else {
-        alert('Data logged successfully!');
+        alert('Saved!');
         fetchDataFromSupabase();
     }
 }
 
-function changeYear1(year) {
-    currentChartYear1 = year;
-    updateCharts();
-}
-
-function changeYear2(year) {
-    currentChartYear2 = year;
-    updateCharts();
-}
+function changeYear1(year) { currentChartYear1 = year; updateCharts(); }
+function changeYear2(year) { currentChartYear2 = year; updateCharts(); }
 
 function updateYearDropdowns() {
     const years = new Set();
-    for (const metric in metricsData) {
-        if (metricsData[metric].yearly) {
-            Object.keys(metricsData[metric].yearly).forEach(y => years.add(y));
-        }
-    }
+    for (const m in metricsData) Object.keys(metricsData[m].yearly).forEach(y => years.add(y));
     const sortedYears = Array.from(years).sort((a, b) => b - a);
-    const select1 = document.getElementById('yearSelect1');
-    const select2 = document.getElementById('yearSelect2');
+    const s1 = document.getElementById('yearSelect1');
+    const s2 = document.getElementById('yearSelect2');
+    if (!s1 || !s2) return;
 
-    if (!select1 || !select2) return;
-
-    const options = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
-    select1.innerHTML = options;
-    select2.innerHTML = `<option value="historical">Historical Average</option>` + options;
-
-    if (sortedYears.includes(String(currentChartYear1))) select1.value = currentChartYear1;
-    if (currentChartYear2 && (currentChartYear2 === 'historical' || sortedYears.includes(String(currentChartYear2)))) select2.value = currentChartYear2;
+    const opt = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
+    s1.innerHTML = opt;
+    s2.innerHTML = `<option value="historical">Historical</option>` + opt;
+    s1.value = currentChartYear1;
+    s2.value = currentChartYear2;
 }
 
+// --- Start the App ---
+initChart();
 fetchDataFromSupabase();
