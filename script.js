@@ -46,7 +46,7 @@ async function fetchDataFromSupabase() {
         for (const metric in metricsData) {
             if (row[metric] !== undefined) {
                 if (!metricsData[metric].yearly[year]) metricsData[metric].yearly[year] = new Array(12).fill(0);
-                metricsData[metric].yearly[year][month] = row[metric];
+                metricsData[metric].yearly[year][month - 1] = row[metric];
             }
         }
     });
