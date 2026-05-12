@@ -11,16 +11,17 @@
         .container { max-width: 1000px; margin: 0 auto; }
         h1 { text-align: center; color: #0f172a; margin-bottom: 20px; }
         .dashboard-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .metric-card { padding: 10px 15px; background: white; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; text-align: center; font-weight: 600; font-size: 14px; transition: 0.2s; }
-        .metric-card:hover { border-color: #3b82f6; background-color: #f1f5f9; }
-        .metric-card.active { background-color: #eff6ff; border-color: #3b82f6; color: #1d4ed8; }
+        .metric-btn { padding: 10px 15px; background: white; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; text-align: center; font-weight: 600; font-size: 14px; transition: 0.2s; }
+        .metric-btn:hover { border-color: #3b82f6; background-color: #f1f5f9; }
+        .metric-btn.active { background-color: #eff6ff; border-color: #3b82f6; color: #1d4ed8; }
         .controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; padding: 15px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
         select { padding: 8px; border-radius: 4px; border: 1px solid #cbd5e1; }
         .chart-wrapper { background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 30px; height: 400px; }
         .log-section { background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; }
-        .log-section h3 { margin-top: 0; text-align: center; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px; }
-        .form-grid input { padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; width: 100%; box-sizing: border-box; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        .input-group label { font-size: 12px; font-weight: 600; color: #64748b; }
+        .input-group input { padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; }
         .submit-btn { width: 100%; padding: 12px; background-color: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
         .submit-btn:hover { background-color: #1d4ed8; }
     </style>
@@ -28,21 +29,21 @@
 <body>
     <div class="container">
         <h1>Energy Consumption Dashboard</h1>
-        
+
         <div class="dashboard-grid">
-            <div class="metric-card active" onclick="showMetric('solar_made')">Solar Made</div>
-            <div class="metric-card" onclick="showMetric('elec_purchased')">Grid Purchased</div>
-            <div class="metric-card" onclick="showMetric('solar_used')">Solar Used</div>
-            <div class="metric-card" onclick="showMetric('solar_sold')">Solar Sold</div>
-            <div class="metric-card" onclick="showMetric('kwh_paid')">kWh Paid</div>
-            <div class="metric-card" onclick="showMetric('total_power')">Total Power</div>
-            <div class="metric-card" onclick="showMetric('propane_usage')">Propane Usage</div>
-            <div class="metric-card" onclick="showMetric('propane_cost')">Propane Cost</div>
-            <div class="metric-card" onclick="showMetric('elec_bill')">Electric Bill</div>
+            <button class="metric-btn active" onclick="showMetric('solar_made')">Solar Made</button>
+            <button class="metric-btn" onclick="showMetric('elec_purchased')">Grid Purchased</button>
+            <button class="metric-btn" onclick="showMetric('solar_used')">Solar Used</button>
+            <button class="metric-btn" onclick="showMetric('solar_sold')">Solar Sold</button>
+            <button class="metric-btn" onclick="showMetric('kwh_paid')">kWh Paid</button>
+            <button class="metric-btn" onclick="showMetric('total_power')">Total Power</button>
+            <button class="metric-btn" onclick="showMetric('propane_usage')">Propane Usage</button>
+            <button class="metric-btn" onclick="showMetric('propane_cost')">Propane Cost</button>
+            <button class="metric-btn" onclick="showMetric('elec_bill')">Electric Bill</button>
         </div>
 
         <div class="controls">
-            <label><strong>Compare:</strong></label>
+            <label><strong>Compare Year:</strong></label>
             <select id="yearSelect1" onchange="changeYear1(this.value)"></select>
             <span><strong>vs</strong></span>
             <select id="yearSelect2" onchange="changeYear2(this.value)"></select>
@@ -55,21 +56,55 @@
         <div class="log-section">
             <h3>Log Monthly Data</h3>
             <div class="form-grid">
-                <input type="number" id="inputYear" placeholder="Year (e.g. 2026)">
-                <input type="number" id="inputMonth" placeholder="Month (1-12)">
-                <input type="number" id="inputSolarMade" placeholder="Solar Made (kWh)">
-                <input type="number" id="inputGridPurchased" placeholder="Grid Purchased (kWh)">
-                <input type="number" id="inputSolarUsed" placeholder="Solar Used (kWh)">
-                <input type="number" id="inputSolarSold" placeholder="Solar Sold (kWh)">
-                <input type="number" id="inputKwhPaid" placeholder="kWh Paid (kWh)">
-                <input type="number" id="inputElecBill" placeholder="Elec Bill ($)" step="0.01">
-                <input type="number" id="inputPropaneUsage" placeholder="Propane Usage (Gals)" step="0.01">
-                <input type="number" id="inputPropaneCost" placeholder="Propane Cost ($)" step="0.01">
-                <input type="number" id="inputTotalPower" placeholder="Total Power (kWh)">
+                <div class="input-group">
+                    <label>Year</label>
+                    <input type="number" id="year" value="2026">
+                </div>
+                <div class="input-group">
+                    <label>Month (1-12)</label>
+                    <input type="number" id="month" min="1" max="12" value="1">
+                </div>
+                <div class="input-group">
+                    <label>Solar Made (kWh)</label>
+                    <input type="number" id="solar_made_input" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Grid Purchased (kWh)</label>
+                    <input type="number" id="grid_purchased_input" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Solar Used (kWh)</label>
+                    <input type="number" id="solar_used_input" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Solar Sold (kWh)</label>
+                    <input type="number" id="solar_sold_input" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>kWh Paid (kWh)</label>
+                    <input type="number" id="kwh_paid_input" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Electric Bill ($)</label>
+                    <input type="number" id="elec_bill_input" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Propane Usage (Gals)</label>
+                    <input type="number" id="propane_usage_input" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Propane Cost ($)</label>
+                    <input type="number" id="propane_cost_input" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Total Power (kWh)</label>
+                    <input type="number" id="total_power_input" step="0.1">
+                </div>
             </div>
             <button class="submit-btn" onclick="logMonthlyData()">Submit Data</button>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
