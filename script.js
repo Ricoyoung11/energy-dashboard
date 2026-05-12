@@ -16,7 +16,7 @@ let currentChartYear2 = 'historical';
 let chart;
 
 const supabaseUrl = 'https://graihkrrpfgiszjgzghf.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; 
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyYWloa3JycGZnaXN6amd6Z2hmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNTA4MzIsImV4cCI6MjA5MzgyNjgzMn0.ekurA5jTtAm3AfH9a9EfrUnapslcuISLsM8z2r4Zh7w'; 
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
 function initChart() {
