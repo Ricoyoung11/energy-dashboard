@@ -60,11 +60,24 @@ function calculateHistoricalAverages() {
     for (const metric in metricsData) {
         const years = Object.keys(metricsData[metric].yearly);
         if (years.length === 0) continue;
+        
         const historical = new Array(12).fill(0);
+        
         for (let m = 0; m < 12; m++) {
-            let sum = 0, count = 0;
-            years.forEach(y => { sum += metricsData[metric].yearly[y][m]; count++; });
-            historical[m] = sum / count;
+            let sum = 0;
+            let count = 0;
+            
+            years.forEach(y => {
+                const val = metricsData[metric].yearly[y][m];
+                // Only include values that are NOT zero
+                if (val > 0) {
+                    sum += val;
+                    count++;
+                }
+            });
+            
+            // Avoid dividing by zero if no years have data for this month
+            historical[m] = count > 0 ? sum / count : 0;
         }
         metricsData[metric].historical = historical;
     }
