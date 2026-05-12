@@ -46,7 +46,7 @@ async function fetchDataFromSupabase() {
         for (const metric in metricsData) {
             if (row[metric] !== undefined) {
                 if (!metricsData[metric].yearly[year]) metricsData[metric].yearly[year] = new Array(12).fill(0);
-                metricsData[metric].yearly[year][month - 1] = row[metric];
+               metricsData[metric].yearly[year][month] = row[metric];
             }
         }
     });
@@ -126,15 +126,29 @@ function changeYear2(year) { currentChartYear2 = year; updateCharts(); }
 
 function updateYearDropdowns() {
     const years = new Set();
-    for (const m in metricsData) Object.keys(metricsData[m].yearly).forEach(y => years.add(y));
+    
+    // Safety Check: Always add the current year so the dropdown isn't empty
+    years.add(new Date().getFullYear().toString());
+
+    // Gather any years that exist in your database data
+    for (const m in metricsData) {
+        if (metricsData[m].yearly) {
+            Object.keys(metricsData[m].yearly).forEach(y => years.add(y));
+        }
+    }
+
     const sortedYears = Array.from(years).sort((a, b) => b - a);
     const s1 = document.getElementById('yearSelect1');
     const s2 = document.getElementById('yearSelect2');
+
     if (!s1 || !s2) return;
 
+    // Create the HTML options
     const opt = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
     s1.innerHTML = opt;
-    s2.innerHTML = `<option value="historical">Historical</option>` + opt;
+    s2.innerHTML = `<option value="historical">Historical Average</option>` + opt;
+
+    // Set the dropdowns to the currently selected years
     s1.value = currentChartYear1;
     s2.value = currentChartYear2;
 }
